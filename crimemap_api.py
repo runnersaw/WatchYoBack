@@ -5,8 +5,8 @@ def get_bbox(current_location):
     loc = GeoLocation.from_degrees(latitude, longitude)
     distance = 1  # 1 kilometer
     SW_loc, NE_loc = loc.bounding_locations(distance)
-    print SW_loc
-    print NE_loc
+    # print SW_loc
+    # print NE_loc
 
     sw_string = SW_loc.__str__()
     sw_degrees = sw_string.split('=')[0]
@@ -21,9 +21,8 @@ def get_bbox(current_location):
     north = ne_degrees[:7]
     east = ne_degrees[-12:-4]
     
-    return west, south, east, north   
+    return "{},{},{},{}".format(west, south, east, north)
 
-
-LOC = (26.062951, -80.238853)
-print get_bbox(LOC)
-# west,south,east,north
+if __name__ == '__main__':
+    LOC = (26.062951, -80.238853)
+    print get_bbox(LOC)
