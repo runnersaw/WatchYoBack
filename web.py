@@ -33,7 +33,8 @@ def safe():
 def show():
 	lat = 42.360091
 	lon = -71.09415999999999
-	return render_template('index.html', lat=lat, lon=lon)
+	crimes = [{"type":"murder", "date":"now"}, {"type":"robbery", "date":"yesterday"}]
+	return render_template('index.html', lat=lat, lon=lon, crimes=crimes)
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port = 5000)
