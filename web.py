@@ -22,25 +22,25 @@ def begin():
 	searchword = request.args.get('username')
 	location = request.args.get('location')
 
-	lats = location.split(';')[0]
-	longs = location.split(';')[1]
+	# lats = location.split(';')[0]
+	# longs = location.split(';')[1]
 
-	bbox = get_bbox((lats, longs)
+	# bbox = get_bbox((lats, longs)
 
-	r = requests.get('http://sanfrancisco.crimespotting.org/crime-data?format=json&count=20&bbox={}'.format(bbox))
-	x= r.json()
+	# r = requests.get('http://sanfrancisco.crimespotting.org/crime-data?format=json&count=20&bbox={}'.format(bbox))
+	# x= r.json()
 
-	# print json.dumps(x)
+	# # print json.dumps(x)
 
-	data = json.loads(json.dumps(x))
+	# data = json.loads(json.dumps(x))
 
-	for feature in data["features"]:
-		coordinates = feature['geometry']['coordinates']
-		break
+	# for feature in data["features"]:
+	# 	coordinates = feature['geometry']['coordinates']
+	# 	break
 
 	crimes = [{"type":"murder", "date":"now"}, {"type":"robbery", "date":"yesterday"}]
 	#crimes = get_crimes()
-	lat, lon = coordinates
+	# lat, lon = coordinates
 	crimes
 	return render_template('index.html', lat=lat, lon=lon, crimes=crimes)
 
@@ -57,9 +57,9 @@ def yo():
 	lats = location.split(';')[0]
 	longs = location.split(';')[1]
 
-	bbox = get_bbox((lats, longs)
+	bbox = get_bbox((lats, longs))
 
-	r = requests.get('http://sanfrancisco.crimespotting.org/crime-data?format=json&count=20&bbox={}'.format(bbox))
+	r = requests.get('http://sanfrancisco.crimespotting.org/crime-data?format=json&count=20&bbox="{}"'.format(bbox))
 	x= r.json()
 
 	# print json.dumps(x)
