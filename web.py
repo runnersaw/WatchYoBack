@@ -13,15 +13,18 @@ API_TOKEN = 'd1c5ad87-a91d-498f-89f1-f17c6b432b2b'
 def checkCrime():
 	pass
 
-
 app = Flask(__name__)
 
 @app.route('/', methods = ['GET', 'POST'])
 def begin():
+	print 'yo'
 	searchword = request.args.get('username')
 	location = request.args.get('location')
+	print location
+	print 'yoyoyo'
 	crimes = [{"type":"murder", "date":"now"}, {"type":"robbery", "date":"yesterday"}]
 	#crimes = get_crimes()
+	print crimes
 	return render_template('index.html', lat=lat, lon=lon, crimes=crimes)
 
 @app.route('/safe', methods = ['POST', 'GET'])
