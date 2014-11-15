@@ -3,3 +3,4 @@ Jinja2==2.7.3
 Werkzeug==0.9.6
 itsdangerous==0.24
 gunicorn
+gettingstarted.wsgi
