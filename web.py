@@ -7,6 +7,7 @@ author: Sawyer
 from flask import Flask
 from flask import render_template, redirect, request, jsonify, url_for
 import requests
+import json
 from crimemap_api import get_bbox
 
 API_TOKEN = 'd1c5ad87-a91d-498f-89f1-f17c6b432b2b'
@@ -21,27 +22,35 @@ def begin():
 	print 'yo'
 	searchword = request.args.get('username')
 	location = request.args.get('location')
+	print 'yo'
 
-	# lats = location.split(';')[0]
-	# longs = location.split(';')[1]
 
-	# bbox = get_bbox((lats, longs)
+	lat = location.split(';')[0]
+	lon = location.split(';')[1]
+	print 'yo'
 
-	# r = requests.get('http://sanfrancisco.crimespotting.org/crime-data?format=json&count=20&bbox={}'.format(bbox))
-	# x= r.json()
+	bbox = get_bbox((lat, lon))
+	print 'yo'
 
-	# # print json.dumps(x)
+	r = requests.get('http://sanfrancisco.crimespotting.org/crime-data?format=json&count=20&bbox="{}"').format(bbox)
+	print 'YO'
+	print r
+	x= r.json()
+	print 'yo'
 
-	# data = json.loads(json.dumps(x))
+	# print json.dumps(x)
 
-	# for feature in data["features"]:
-	# 	coordinates = feature['geometry']['coordinates']
-	# 	break
+	print 'hi'
+	data = json.loads(json.dumps(x))
 
-	crimes = [{"type":"murder", "date":"now"}, {"type":"robbery", "date":"yesterday"}]
-	#crimes = get_crimes()
-	# lat, lon = coordinates
-	return render_template('index.html', lat=lat, lon=lon, crimes=crimes)
+	for feature in data["features"]:
+		coordinates = feature['geometry']['coordinates']
+		break
+
+	print 'ho'
+	lat, lon = coordinates
+
+	return render_template('index.html', lat=lat, lon=lon)
 
 @app.route('/safe', methods = ['POST', 'GET'])
 def safe():
@@ -52,24 +61,6 @@ def yo():
 	searchword = request.args.get('username')
 	location = request.args.get('location')
 
-
-	lats = location.split(';')[0]
-	longs = location.split(';')[1]
-
-	bbox = get_bbox((lats, longs))
-
-	r = requests.get('http://sanfrancisco.crimespotting.org/crime-data?format=json&count=20&bbox="{}"'.format(bbox))
-	x= r.json()
-
-	# print json.dumps(x)
-
-	data = json.loads(json.dumps(x))
-
-	for feature in data["features"]:
-		coordinates = feature['geometry']['coordinates']
-		break
-
-	lat, lon = coordinates
 	requests.post("http://api.justyo.co/yo/", data={'api_token': 'd1c5ad87-a91d-498f-89f1-f17c6b432b2b', 'username': 'svaughan', 'link':'facebook.com/?location={};{}'.format(lat,long) })
 
 if __name__ == '__main__':
